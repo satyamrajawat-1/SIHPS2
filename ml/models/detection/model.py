@@ -83,7 +83,7 @@ class YOLODetector(ObjectDetector):
         self.class_names: Dict[int, str] = {}
         self._track_history: Dict[int, List] = {}
 
-    def load_model(self, checkpoint: str = "yolo11s.pt", device: str = "auto"):
+    def load_model(self, checkpoint: str = "yolo11s.pt", device: str = None):
         """
         Load YOLO model from checkpoint.
 
@@ -93,7 +93,7 @@ class YOLODetector(ObjectDetector):
         """
         ultralytics = _get_ultralytics()
         self.model = ultralytics.YOLO(checkpoint)
-        if device != "auto":
+        if device is not None:
             self.device = device
         self.class_names = self.model.names if hasattr(self.model, 'names') else {}
         logger.info(f"YOLO model loaded: {checkpoint} | Classes: {len(self.class_names)}")
@@ -122,6 +122,7 @@ class YOLODetector(ObjectDetector):
                 persist=True,
                 tracker=self.tracker,
                 verbose=False,
+                device=self.device,
             )
         else:
             results = self.model.predict(
@@ -131,6 +132,7 @@ class YOLODetector(ObjectDetector):
                 iou=self.iou_threshold,
                 max_det=self.max_det,
                 verbose=False,
+                device=self.device,
             )
 
         detections = []

@@ -65,20 +65,21 @@ class RTMPoseEstimator(PoseEstimator):
         self._pose_model = None
         self._person_counter = 0
 
-    def load_model(self, checkpoint: str = "", device: str = "cpu"):
+    def load_model(self, checkpoint: str = "", device: str = None):
         """
         Load RTMPose model.
 
         Attempts rtmlib first, then falls back to ONNX Runtime.
         """
-        self.device = device
+        if device is not None:
+            self.device = device
 
         try:
             from rtmlib import Body
             self._pose_model = Body(
                 mode="lightweight" if "lite" in self.body_model_name else "performance",
                 backend=self.backend,
-                device=device,
+                device=self.device,
             )
             print("Pose source: REAL RTMPOSE")
             logger.info(f"RTMPose loaded via rtmlib | model={self.body_model_name}")
