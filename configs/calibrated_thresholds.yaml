@@ -1,0 +1,39 @@
+# Calibrated Thresholds for ASTRA
+# These thresholds should be tuned using ml/evaluation/calibrate.py
+# on a validation set. Initial values below are defaults.
+
+# NOTE: These defaults have NOT been calibrated on real data yet.
+# Run calibration after first real model evaluation.
+calibration_status: "UNCALIBRATED"
+
+# Detection confidence threshold
+detection_threshold: 0.25
+
+# Action recognition confidence
+action_threshold: 0.3
+
+# HOI interaction confidence
+hoi_threshold: 0.3
+
+# Object state change confidence
+object_state_threshold: 0.5
+
+# Temporal model confidence
+temporal_threshold: 0.3
+
+# Step completion threshold (composite evidence score)
+step_completion_threshold: 0.6
+
+# Step uncertain threshold (below this = NOT_STARTED)
+step_uncertain_threshold: 0.3
+
+# Anomaly detection thresholds
+anomaly:
+  out_of_order_threshold: 0.5
+  skip_detection_threshold: 0.5
+  timeout_seconds: 120.0
+  temporal_persistence_frames: 5
+
+# Safety constraint
+# FALSE VALID rate must stay below this value
+max_false_valid_rate: 0.05

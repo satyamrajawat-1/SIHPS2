@@ -1,0 +1,30 @@
+# ASTRA YOLO Detection Dataset Configuration
+# This file is used for fine-tuning YOLO11-S on experiment-specific objects.
+#
+# Usage:
+#   python -m ml.models.detection.train --data configs/detection.yaml --epochs 100
+#
+# Dataset must be prepared BEFORE training:
+#   1. Extract frames: python -m ml.data.collect --input video.mp4 --output data/raw/session_001/
+#   2. Annotate objects: python -m ml.data.annotate --session data/raw/session_001/
+#   3. Convert to YOLO format: python -m ml.data.convert_to_yolo --input data/raw/ --output data/yolo/
+#   4. Create split: python -m ml.data.split.split_dataset --dataset data/yolo/
+
+# Path to dataset root (relative to working directory)
+path: data/yolo
+
+# Train/val/test directories (relative to path)
+train: images/train
+val: images/val
+test: images/test
+
+# Number of classes
+nc: 5
+
+# Class names (must match experiment config)
+names:
+  0: container
+  1: tray
+  2: tweezers
+  3: scissors
+  4: sample
